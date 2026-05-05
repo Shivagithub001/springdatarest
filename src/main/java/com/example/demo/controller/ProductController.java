@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class ProductController {
 	@Autowired
 	private ProductsDao pdao;
 	
-	@GetMapping(path="/products",produces = {"application/xml"})
+	@GetMapping(path="/products")
 	public List<Products> getProducts() {
 		
 		System.out.println("welcome to the products controller mapping method");
@@ -37,7 +38,12 @@ public class ProductController {
 		return "you record deleted successfully";
 		
 	}
-	
+
+	@PutMapping("/updateproduct")
+	public Products updateProduct(@RequestBody Products product) {
+		
+		return pdao.save(product);
+	}
 	
 	@GetMapping("/product/{pid}")
 	public Optional<Products> getProduct(@PathVariable("pid") int pid) {
